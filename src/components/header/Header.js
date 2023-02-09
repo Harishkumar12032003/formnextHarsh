@@ -28,7 +28,7 @@ const logo = (
 const cart = (
   <span className={styles.cart}>
     <Link to="/cart">
-      Cart
+      {/* Cart */}
       <FaShoppingCart size={20} />
       <p>0</p>
     </Link>
@@ -118,7 +118,7 @@ const Header = () => {
             <li>
               <AdminOnlyLink>
                 <Link to="/admin/home">
-                  <button className="--btn --btn-secondary">Admin</button>
+                  <button className="btn-secondary">Admin</button>
                 </Link>
               </AdminOnlyLink>
             </li>
@@ -151,9 +151,8 @@ const Header = () => {
                 </NavLink>
               </ShowOnLogout>
               <ShowOnLogin>
-                <a href="#home" style={{ color: "#ff7722" }}>
-                  <FaUserCircle size={16} />
-                  Hi, {displayName}
+                <a href="#home" style={{ color: "lightblue" }}>
+                 🙍‍♂️ Hi, {displayName}
                 </a>
               </ShowOnLogin>
               <ShowOnLogin>
