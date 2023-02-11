@@ -1,20 +1,26 @@
-import { addDoc, collection, Timestamp } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { addDoc, collection, doc, setDoc, Timestamp } from "firebase/firestore";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { db, storage } from "../../../firebase/config";
 import Card from "../../card/Card";
 import Loader from "../../loader/Loader";
 import styles from "./AddProduct.module.scss";
+import { selectProducts } from "../../../redux/slice/productSlice";
 
 const categories = [
-  { id: 1, name: "Robotics" },
-  { id: 2, name: "Arduino" },
-  { id: 3, name: "Rasberry pi" },
-  { id: 4, name: "Diy" },
+  { id: 1, name: "Laptop" },
+  { id: 2, name: "Electronics" },
+  { id: 3, name: "Fashion" },
+  { id: 4, name: "Phone" },
 ];
-
 const initialState = {
   name: "",
   imageURL: "",
@@ -25,27 +31,36 @@ const initialState = {
 };
 
 const AddProduct = () => {
-  const [product, setProduct] = useState({
-    ...initialState,
+  const { id } = useParams();
+  const products = useSelector(selectProducts);
+  const productEdit = products.find((item) => item.id === id);
+  console.log(productEdit);
+
+  const [product, setProduct] = useState(() => {
+    const newState = detectForm(id, { ...initialState }, productEdit);
+    return newState;
   });
 
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-
   const navigate = useNavigate();
+
+  function detectForm(id, f1, f2) {
+    if (id === "ADD") {
+      return f1;
+    }
+    return f2;
+  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
   };
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     // console.log(file);
-
     const storageRef = ref(storage, `eshop/${Date.now()}${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
-
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -64,12 +79,10 @@ const AddProduct = () => {
       }
     );
   };
-
   const addProduct = (e) => {
     e.preventDefault();
-    console.log(product);
+    // console.log(product);
     setIsLoading(true);
-
     try {
       const docRef = addDoc(collection(db, "products"), {
         name: product.name,
@@ -83,8 +96,36 @@ const AddProduct = () => {
       setIsLoading(false);
       setUploadProgress(0);
       setProduct({ ...initialState });
-
       toast.success("Product uploaded successfully.");
+      navigate("/admin/all-products");
+    } catch (error) {
+      setIsLoading(false);
+      toast.error(error.message);
+    }
+  };
+
+  const editProduct = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    if (product.imageURL !== productEdit.imageURL) {
+      const storageRef = ref(storage, productEdit.imageURL);
+      deleteObject(storageRef);
+    }
+
+    try {
+      setDoc(doc(db, "products", id), {
+        name: product.name,
+        imageURL: product.imageURL,
+        price: Number(product.price),
+        category: product.category,
+        brand: product.brand,
+        desc: product.desc,
+        createdAt: productEdit.createdAt,
+        editedAt: Timestamp.now().toDate(),
+      });
+      setIsLoading(false);
+      toast.success("Product Edited Successfully");
       navigate("/admin/all-products");
     } catch (error) {
       setIsLoading(false);
@@ -96,9 +137,9 @@ const AddProduct = () => {
     <>
       {isLoading && <Loader />}
       <div className={styles.product}>
-        <h1>Add New Product</h1>
+        <h2>{detectForm(id, "Add New Product", "Edit Product")}</h2>
         <Card cardClass={styles.card}>
-          <form onSubmit={addProduct}>
+          <form onSubmit={detectForm(id, addProduct, editProduct)}>
             <label>Product name:</label>
             <input
               type="text"
@@ -108,7 +149,6 @@ const AddProduct = () => {
               value={product.name}
               onChange={(e) => handleInputChange(e)}
             />
-
             <label>Product image:</label>
             <Card cardClass={styles.group}>
               {uploadProgress === 0 ? null : (
@@ -123,7 +163,6 @@ const AddProduct = () => {
                   </div>
                 </div>
               )}
-
               <input
                 type="file"
                 accept="image/*"
@@ -131,7 +170,6 @@ const AddProduct = () => {
                 name="image"
                 onChange={(e) => handleImageChange(e)}
               />
-
               {product.imageURL === "" ? null : (
                 <input
                   type="text"
@@ -143,7 +181,6 @@ const AddProduct = () => {
                 />
               )}
             </Card>
-
             <label>Product price:</label>
             <input
               type="number"
@@ -171,7 +208,6 @@ const AddProduct = () => {
                 );
               })}
             </select>
-
             <label>Product Company/Brand:</label>
             <input
               type="text"
@@ -181,7 +217,6 @@ const AddProduct = () => {
               value={product.brand}
               onChange={(e) => handleInputChange(e)}
             />
-
             <label>Product Description</label>
             <textarea
               name="desc"
@@ -192,12 +227,13 @@ const AddProduct = () => {
               rows="10"
             ></textarea>
 
-            <button className="--btn --btn-primary">Save Product</button>
+            <button className="--btn --btn-primary">
+              {detectForm(id, "Save Product", "Edit Product")}
+            </button>
           </form>
         </Card>
       </div>
-    </>
+      </>
   );
 };
-
 export default AddProduct;
