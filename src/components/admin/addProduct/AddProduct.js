@@ -16,10 +16,10 @@ import styles from "./AddProduct.module.scss";
 import { selectProducts } from "../../../redux/slice/productSlice";
 
 const categories = [
-  { id: 1, name: "Laptop" },
-  { id: 2, name: "Electronics" },
-  { id: 3, name: "Fashion" },
-  { id: 4, name: "Phone" },
+  { id: 1, name: "Arduino" },
+  { id: 2, name: "Robotics" },
+  { id: 3, name: "DIY" },
+  { id: 4, name: "IOT" },
 ];
 const initialState = {
   name: "",

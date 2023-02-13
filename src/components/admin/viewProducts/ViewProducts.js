@@ -81,8 +81,8 @@ const ViewProducts = () => {
             {products.map((product, index) => {
               const { id, name, price, imageURL, category } = product;
               return (
-                <tbody>
-                  <tr key={id}>
+                <tbody key={id}>
+                  <tr >
                     <td>{index + 1}</td>
                     <td>
                       <img
@@ -93,7 +93,7 @@ const ViewProducts = () => {
                     </td>
                     <td>{name}</td>
                     <td>{category}</td>
-                    <td>{`$${price}`}</td>
+                    <td>₹{price}</td>
                     <td className={styles.icons}>
                       <Link to={`/admin/add-product/${id}`}>
                         <FaEdit size={20} color="green" />

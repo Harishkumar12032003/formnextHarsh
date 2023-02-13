@@ -10,7 +10,7 @@ export const sliderData = [
     desc: "Learn latest technological advancements",
   },
   {
-    image: "https://contentstatic.techgig.com/photo/77738801/2-real-world-project-ideas-for-your-data-science-portfolio.jpg?78166",
+    image: "https://www.iiba.org/contentassets/d2d1ab5f954745c2b4f374394538b6ab/how-business-analysis-can-improve-iot-projects-header.jpg",
     heading: "RealWorld Projects",
     desc: "Learn how real world machines work",
   },
