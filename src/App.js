@@ -9,6 +9,8 @@ import AdminOnlyRoute from "./components/adminOnlyRoute/AdminOnlyRoute";
 import Blogs from "./pages/blogs/blogs";
 import About from "./pages/about/about";
 import ProductDetails from "./components/product/productDetails/ProductDetails";
+import Crop from "./components/crop";
+
 
 function App() {
   return (
@@ -18,7 +20,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/blogs" element={<Crop/>} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
