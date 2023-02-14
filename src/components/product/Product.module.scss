@@ -1,7 +1,7 @@
 .product {
     display: flex;
     position: relative;
-  
+    margin-left: 10%;
     .filter {
       width: 20%;
       // border: 2px solid var(--dark-blue);
@@ -9,7 +9,7 @@
     }
   
     .content {
-      width: 80%;
+      width: 100%;
       padding-left: 5px;
       position: relative;
       .icon {

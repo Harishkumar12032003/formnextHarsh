@@ -45,6 +45,11 @@ section {
   padding: 0 20px;
 }
 
+.container1 {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
 /* UTILITY CLASSES */
 
 /* Flex */

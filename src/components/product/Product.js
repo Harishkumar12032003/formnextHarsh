@@ -22,7 +22,7 @@ const Product = () => {
 
   return (
     <section>
-      <div className={`container ${styles.product}`}>
+      <div className={`container1 ${styles.product}`}>
       <aside className={styles.filter}>
           {isLoading ? null : <ProductFilter />}
         </aside>
