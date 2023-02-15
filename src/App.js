@@ -10,6 +10,7 @@ import Blogs from "./pages/blogs/blogs";
 import About from "./pages/about/about";
 import ProductDetails from "./components/product/productDetails/ProductDetails";
 import Crop from "./components/crop";
+import Simulation from "./pages/simulation/simulation";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/blogs" element={<Crop/>} />
+          <Route path="/simulation" element = {<Simulation/>}/>
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
