@@ -8,6 +8,7 @@ import { Header, Footer } from "./components";
 import AdminOnlyRoute from "./components/adminOnlyRoute/AdminOnlyRoute";
 import Blogs from "./pages/blogs/blogs";
 import About from "./pages/about/about";
+import Simulation from "./pages/simulation/simulation";
 import ProductDetails from "./components/product/productDetails/ProductDetails";
 import Crop from "./components/crop";
 import Simulation from "./pages/simulation/simulation";
@@ -16,6 +17,8 @@ import Simulation from "./pages/simulation/simulation";
 function App() {
   return (
     <>
+    <script src="https://www.tinkercad.com/embed-api/js/embed-api.min.js"></script>
+
       <BrowserRouter>
         <ToastContainer />
         <Header />
@@ -24,6 +27,7 @@ function App() {
           <Route path="/blogs" element={<Crop/>} />
           <Route path="/simulation" element = {<Simulation/>}/>
           <Route path="/about" element={<About />} />
+          <Route path="/simulation" element = {<Simulation/>}/>
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
