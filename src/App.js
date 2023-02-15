@@ -11,6 +11,7 @@ import About from "./pages/about/about";
 import Simulation from "./pages/simulation/simulation";
 import ProductDetails from "./components/product/productDetails/ProductDetails";
 import Crop from "./components/crop";
+import Simulation from "./pages/simulation/simulation";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/blogs" element={<Crop/>} />
+          <Route path="/simulation" element = {<Simulation/>}/>
           <Route path="/about" element={<About />} />
           <Route path="/simulation" element = {<Simulation/>}/>
           <Route path="/contact" element={<Contact />} />
